@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>document</title>
+  </head>
+  <body>
+    <div style="width: 400px; margin: 100px auto">
+      <h1>Basic 3</h1>
+      <label for="timeInput">Masukan Waktu (hh:mm:ssAM/PM):</label>
+      <input
+        type="text"
+        id="timeInput"
+        placeholder="07:05:45AM"
+        style="padding: 10px; width: 100%; border: 1px solid rgb(199, 189, 189)"
+      />
+      <button onclick="submitTime()" style="margin-top: 10px">Submit</button>
+      <div id="output" style="margin-top: 20px"></div>
+    </div>
+
+    <script>
+      function submitTime() {
+        const timeInput = document.getElementById("timeInput").value;
+        const timeRegex = /^([0-2][0-9]):[0-5][0-9]:[0-5][0-9]([APap][Mm])?$/;
+
+        if (timeRegex.test(timeInput)) {
+          const convertedTime = extractTimeComponents(timeInput);
+          document.getElementById(
+            "output"
+          ).innerHTML = `Output : ${convertedTime}`;
+        } else {
+          document.getElementById("output").innerHTML =
+            "Invalid time format. masukan sesuai format hh:mm:ssAM/PM.";
+        }
+      }
+
+      function extractTimeComponents(time) {
+        const match = time.match(
+          /^([0-2][0-9]):([0-5][0-9]):([0-5][0-9])([APap][Mm])?$/
+        );
+        let hh = parseInt(match[1], 10);
+        const mm = match[2];
+        const ss = match[3];
+        const period = match[4] || "";
+
+        if (
+          (period.toLowerCase() === "am" && hh === 12) ||
+          (period.toLowerCase() === "am" && hh >= 24) ||
+          (period.toLowerCase() === "pm" && hh >= 24)
+        ) {
+          hh = 0;
+        } else if (period.toLowerCase() === "pm" && hh < 12) {
+          hh += 12;
+        }
+        return `${hh.toString().padStart(2, "0")}:${mm}:${ss}`;
+      }
+    </script>
+  </body>
+</html>

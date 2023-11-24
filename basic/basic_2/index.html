@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="width: 400px; margin: 100px auto">
+      <h1>Basic 2</h1>
+      Input total input
+      <div>
+        <input
+          type="number"
+          max="100"
+          min="0"
+          style="
+            padding: 10px;
+            width: 100%;
+            border: 1px solid rgb(199, 189, 189);
+          "
+          id="inputData"
+        />
+      </div>
+      <button onclick="submitN()" style="margin-top: 10px">set N</button>
+      <span>min 0 max 100</span>
+      <div id="totalInput"></div>
+      <div style="margin-top: 50px">
+        Output :
+        <div
+          id="output"
+          style="
+            padding: 10px;
+            width: 100%;
+            border: 1px solid rgb(199, 189, 189);
+          "
+        ></div>
+      </div>
+    </div>
+
+    <script>
+      function calculateRatio(arrN) {
+        const n = arrN.length;
+        let negative = 0;
+        let positive = 0;
+        let zero = 0;
+
+        arrN.forEach((item) => {
+          if (item > 0) {
+            positive++;
+          } else if (item < 0) {
+            negative++;
+          } else {
+            zero++;
+          }
+        });
+
+        const outputElement = document.getElementById("output");
+        outputElement.innerHTML = `
+          positive: ${(positive / n).toFixed(6)}, 
+          negative: ${(negative / n).toFixed(6)}, 
+          zero: ${(zero / n).toFixed(6)}
+        `;
+      }
+
+      function submitN() {
+        const getN = document.getElementById("inputData").value;
+        const totalInputElement = document.getElementById("totalInput");
+        totalInputElement.innerHTML = "";
+
+        for (let index = 0; index < getN; index++) {
+          const inputElement = document.createElement("input");
+          inputElement.type = "number";
+          inputElement.max = "100";
+          inputElement.min = "-100";
+          inputElement.style =
+            "padding: 10px; margin-top:10px; width: 100%; border: 1px solid rgb(199, 189, 189);";
+          inputElement.id = `inputData_${index}`;
+          totalInputElement.appendChild(inputElement);
+        }
+
+        const btnElement = document.createElement("button");
+        btnElement.textContent = "Submit";
+        btnElement.style =
+          "padding: 10px; margin-top:10px; width: 100px; border: 1px solid rgb(199, 189, 189);";
+        btnElement.onclick = submit;
+        totalInputElement.appendChild(btnElement);
+        const captElement = document.createElement("span");
+        captElement.textContent = "min -100 max 100";
+        captElement.style = "padding: 10px; margin-top:10px; width: 100px; ";
+        captElement.onclick = submit;
+        totalInputElement.appendChild(captElement);
+      }
+
+      function submit() {
+        const inputs = document.querySelectorAll('[id^="inputData_"]');
+        const inputValues = Array.from(inputs).map((input) =>
+          parseInt(input.value)
+        );
+        calculateRatio(inputValues);
+      }
+    </script>
+  </body>
+</html>

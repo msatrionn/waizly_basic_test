@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="width: 400px; margin: 100px auto">
+      <h1>Basic 1</h1>
+      Input
+      <div>
+        <input
+          type="text"
+          style="
+            padding: 10px;
+            width: 100%;
+            border: 1px solid rgb(199, 189, 189);
+          "
+          id="inputData"
+        />
+      </div>
+      <button onclick="submitForm()" style="margin-top: 10px">Submit</button>
+      <div style="margin-top: 50px">
+        Output :
+        <div
+          id="output"
+          style="
+            padding: 10px;
+            width: 100%;
+            border: 1px solid rgb(199, 189, 189);
+          "
+        ></div>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  function submitForm() {
+    // ambil value input
+    const param = document.getElementById("inputData").value;
+
+    // pisahkan value berdasarkan spasi
+    const setParam = param.split(" ");
+    minmax(setParam);
+  }
+
+  function minmax(params) {
+    //  ubah array string jadi integer
+    let arrayInt = params.map(function (item) {
+      return parseInt(item, 10);
+    });
+
+    // Mengurutkan array dari nilai terkecil ke terbesar
+    arrayInt.sort(function (a, b) {
+      return a - b;
+    });
+
+    // Mengambil 4 nilai terkecil dan 4 nilai terbesar
+    let minValues = arrayInt.slice(0, 4);
+    let maxValues = arrayInt.slice(-4);
+
+    // Menghitung jumlah dari 4 nilai terkecil dan 4 nilai terbesar
+    let sumMin = minValues.reduce((acc, current) => acc + current, 0);
+    let sumMax = maxValues.reduce((acc, current) => acc + current, 0);
+
+    //tampilkan output
+    let output = document.getElementById("output");
+    output.innerHTML = sumMin + " " + sumMax;
+  }
+</script>
